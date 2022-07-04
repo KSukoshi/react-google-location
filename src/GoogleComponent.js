@@ -15,7 +15,6 @@ export class GoogleComponent extends Component {
       returnData: {
 
       },
-      currentLocation: '',
       currentCoordinates: {},
       liStyle: '',
       proxyUrl: " ",
@@ -29,10 +28,6 @@ export class GoogleComponent extends Component {
       liStyle: this.props.locationListStyle ? this.props.locationListStyle : 'style-list',
       placeholder: this.props.placeholder ? this.props.placeholder : 'Start Typing Location'
     })
-
-    if (this.props.currentLocationByDefault && !this.props.currentCoordinates) {
-      this.getCurrentLocation({shortLocation: true})
-    }
 
     if (this.props.currentCoordinates) {
       this.getLocationByCoordinates(this.props.currentCoordinates)
@@ -141,30 +136,6 @@ export class GoogleComponent extends Component {
     }
 
   }
-  getCurrentLocation({shortLocation = false}) {
-    if (this.props.apiKey) {
-      navigator.geolocation.getCurrentPosition((location) => {
-
-        var obj = "latlng=" + location.coords.latitude + "," + location.coords.longitude;
-
-        let _fire = fetch(this.state.proxyUrl + 'https://maps.googleapis.com/maps/api/geocode/json?' + obj + '&key=' + this.props.apiKey
-        )
-        return _fire.then((resp) => {
-          return resp.json().then((res) => {
-            let location = res.results[0].formatted_address
-            if (shortLocation) location = res.results[res.results.length - 2].formatted_address
-
-            this._returnData(location)
-            this.setState({ collectionShow: false })
-          })
-        }).catch(error => {
-          this.setState({ proxyUrl: proxyUrl })
-
-        })
-      });
-
-    }
-  }
   arrangeList(place) {
     this._returnData(place)
     this.setState({ collectionShow: false })
@@ -218,7 +189,7 @@ export class GoogleComponent extends Component {
         ),
         this.state.collectionShow ?
           React.createElement("div", { className: "google-covert" },
-            this.state.currentLocation, this.state.collection
+           this.state.collection
           )
           : null
       )
