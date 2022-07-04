@@ -42,11 +42,6 @@ export class GoogleComponent extends Component {
       className: 'current-loc-ico',
       src: "https://www.materialui.co/materialIcons/maps/my_location_black_192x192.png",
     })
-    let _current = React.createElement("li",
-      { className: this.state.liStyle, onClick: () => this.getCurrentLocation(), },
-      _ico, "Current Location");
-    this.setState({ currentLocation: _current })
-    document.addEventListener("mousedown", (e) => this.handleClickOutside(e));
   }
 
   componentWillUnmount() {
