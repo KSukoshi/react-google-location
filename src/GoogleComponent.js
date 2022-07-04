@@ -32,11 +32,6 @@ export class GoogleComponent extends Component {
     if (this.props.currentCoordinates) {
       this.getLocationByCoordinates(this.props.currentCoordinates)
     }
-
-    let _ico = React.createElement("img", {
-      className: 'current-loc-ico',
-      src: "https://www.materialui.co/materialIcons/maps/my_location_black_192x192.png",
-    })
   }
 
   componentWillUnmount() {
